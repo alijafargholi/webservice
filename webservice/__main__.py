@@ -47,7 +47,7 @@ async def add_assignee_to_issue(event, gh, *args, **kwargs):
 
     await gh.post(url,
                   assignees=['alijafargholi'],
-                  accept='application/vnd.github.squirrel-girl-preview+json')
+                  accept='application/vnd.github.symmetra-preview+json')
 
 
 async def main(request):
