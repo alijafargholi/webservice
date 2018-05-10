@@ -21,15 +21,33 @@ async def issue_opened_event(event, gh, *args, **kwargs):
     await gh.post(url, data={"body": message})
 
 
+# Webhook event name: issue_comment
+# Resource: https://developer.github.com/v3/activity/events/types/#webhook-event-name-15
 @router.register("issue_comment", action="created")
 async def react_to_issue_comment(event, gh, *args, **kwargs):
     """
     Whenever an issue is comments, react to it .
     """
     url = event.data["comment"]["url"]+"/reactions"
-    print("THis is the URL --> ", url)
 
-    await gh.post(url, data={"content": "heart"}, accept='application/vnd.github.squirrel-girl-preview+json')
+    await gh.post(url,
+                  data={"content": "heart"},
+                  accept='application/vnd.github.squirrel-girl-preview+json')
+
+
+# Any issue that is created, set its assignee
+# POST /repos/:owner/:repo/issues/:number/assignees
+@router.register("issues", action="opened")
+async def add_assignee_to_issue(event, gh, *args, **kwargs):
+    """
+    Whenever an issue is created, assign it to alijafargholi.
+    """
+    url = event.data["comment"]["url"]+"/assignees"
+    print(f"This is the new url {url}")
+
+    await gh.post(url,
+                  assignees=['alijafargholi'],
+                  accept='application/vnd.github.squirrel-girl-preview+json')
 
 
 async def main(request):
