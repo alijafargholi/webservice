@@ -42,7 +42,7 @@ async def add_assignee_to_issue(event, gh, *args, **kwargs):
     """
     Whenever an issue is created, assign it to alijafargholi.
     """
-    url = event.data["comment"]["url"]+"/assignees"
+    url = event.data["issue"]["url"]+"/assignees"
     print(f"This is the new url {url}")
 
     await gh.post(url,
