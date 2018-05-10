@@ -21,6 +21,16 @@ async def issue_opened_event(event, gh, *args, **kwargs):
     await gh.post(url, data={"body": message})
 
 
+@router.register("issue_comment", action="created")
+async def react_to_issue_comment(event, gh, *args, **kwargs):
+    """
+    Whenever an issue is comments, react to it .
+    """
+    url = event.data["issue"]["comments_url"]+"/reactions"
+
+    await gh.post(url, data={"content": "heart"}, accept='application/vnd.github.squirrel-girl-preview+json')
+
+
 async def main(request):
     body = await request.read()
 
