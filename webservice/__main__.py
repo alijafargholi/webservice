@@ -26,7 +26,7 @@ async def react_to_issue_comment(event, gh, *args, **kwargs):
     """
     Whenever an issue is comments, react to it .
     """
-    url = event.data["issue"]["comments_url"]+"/reactions"
+    url = event.data["comment"]["url"]+"/reactions"
     print("THis is the URL --> ", url)
 
     await gh.post(url, data={"content": "heart"}, accept='application/vnd.github.squirrel-girl-preview+json')
